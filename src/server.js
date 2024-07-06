@@ -42,7 +42,6 @@ export function startServer() {
     if (!contact) {
       res.json({
         message: 'Not found',
-        id: contactId,
       });
       return;
     }
