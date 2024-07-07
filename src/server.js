@@ -23,7 +23,7 @@ export function startServer() {
 
   app.get('/', (req, res) => {
     res.json({
-      message: 'Hello wold!',
+      message: 'Hello, this is contacts app',
     });
   });
 
