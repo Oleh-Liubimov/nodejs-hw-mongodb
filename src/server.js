@@ -3,6 +3,9 @@ import pino from 'pino-http';
 import cors from 'cors';
 
 import { env } from './utils/env.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+import router from './routers/contacts.js';
 
 const PORT = Number(env('PORT', '3000'));
 
@@ -27,12 +30,11 @@ export function startServer() {
         });
     });
 
+    app.use(router);
 
-    app.get('*', (req,res) => {
-        res.status(404).json({
-            message: 'Not found'
-        });
-    });
+    app.use('*', notFoundHandler);
+
+    app.use(errorHandler);
 
     app.listen(PORT, () => {
     console.log(`Sever is running on port ${PORT}`);
