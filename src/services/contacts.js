@@ -24,11 +24,17 @@ export const updateContact = async (contactId, payload,) => {
   const result = await ContactsCollection.findOneAndUpdate(
     { _id: contactId },
     payload,
+    {
+      new: true,
+      includeResultMetadata: true,
+    },
   );
+
+  console.log(result);
 
   if (!result || !result.value) return null;
 
   return {
-    contact: result.value,
+    contact: result,
   };
 };
