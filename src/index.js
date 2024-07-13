@@ -1,9 +1,9 @@
-import { startServer } from "./server.js";
-import { initMangoDB } from "./db/initMangoConnection.js";
+import { startServer } from './server.js';
+import { initMangoDB } from './db/initMangoConnection.js';
 
 async function initServer() {
-    await initMangoDB();
-    startServer();
+  await initMangoDB();
+  startServer();
 }
 
 initServer();

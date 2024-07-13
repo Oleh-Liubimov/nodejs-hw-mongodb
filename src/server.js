@@ -12,31 +12,30 @@ const PORT = Number(env('PORT', '3000'));
 export function startServer() {
   const app = express();
 
-    app.use(express.json());
-    app.use(cors());
+  app.use(express.json());
+  app.use(cors());
 
-    app.use(
-        pino({
-            transport: {
-                target: 'pino-pretty'
-            }
-        })
-    );
+  app.use(
+    pino({
+      transport: {
+        target: 'pino-pretty',
+      },
+    }),
+  );
 
-
-    app.get('/', (req,res) => {
-        res.json({
-            message: 'Hello wold!'
-        });
+  app.get('/', (req, res) => {
+    res.json({
+      message: 'Hello wold!',
     });
+  });
 
-    app.use(router);
+  app.use(router);
 
-    app.use('*', notFoundHandler);
+  app.use('*', notFoundHandler);
 
-    app.use(errorHandler);
+  app.use(errorHandler);
 
-    app.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`Sever is running on port ${PORT}`);
   });
 }
