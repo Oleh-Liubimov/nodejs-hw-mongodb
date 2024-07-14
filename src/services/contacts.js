@@ -35,6 +35,6 @@ export const updateContact = async (contactId, payload,) => {
   if (!result || !result.value) return null;
 
   return {
-    contact: result,
+    contact: result.value,
   };
 };
