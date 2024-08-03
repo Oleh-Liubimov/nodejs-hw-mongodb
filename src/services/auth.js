@@ -36,7 +36,7 @@ export const loginUser = async (payload) => {
     throw createHttpError(404, 'User not found');
   }
 
-  const isEqual = bcrypt.compare(payload.password, user.password);
+  const isEqual = await bcrypt.compare(payload.password, user.password);
 
   if (!isEqual) {
     throw createHttpError(401, 'Email or password is incorrect');
@@ -103,7 +103,7 @@ export const requestResetToken = async (email) => {
     },
     env('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
 
@@ -115,7 +115,7 @@ export const requestResetToken = async (email) => {
 
   const html = template({
     name: user.name,
-    linl: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
+    link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
   });
 
   await sendEmail({
@@ -123,5 +123,32 @@ export const requestResetToken = async (email) => {
     to: email,
     subject: 'Reset your password',
     html,
+  });
+};
+
+export const resetPassword = async (payload) => {
+  let entries;
+
+  try {
+    entries = jwt.verify(payload.token, env('JWT_SECRET'));
+  } catch (error) {
+    if (error instanceof Error) throw createHttpError(401, error.message);
+  }
+
+  const user = await UsersCollection.findOne({
+    email: entries.email,
+    _id: entries.sub,
+  });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const encryptedPassword = await bcrypt.hash(payload.password, 10);
+
+  await UsersCollection.updateOne({ _id: user._id }, { password: encryptedPassword });
+
+  await SessionCollection.deleteOne({
+    userId: entries.sub,
   });
 };
