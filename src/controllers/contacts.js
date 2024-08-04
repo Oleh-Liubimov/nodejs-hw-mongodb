@@ -72,12 +72,14 @@ export const createContactController = async (req, res, next) => {
       return next(createHttpError(400, 'Bad request'));
     }
 
+    const contactData = contact.toObject();
+    contactData.photoUrl = photoUrl;
+
     res.status(201).json({
       status: 201,
       msg: 'Successfully created a contact!',
       data: {
-        ...contact,
-        photoUrl,
+        contactData,
       },
     });
   } catch (error) {
@@ -116,10 +118,8 @@ export const patchContactController = async (req, res, next) => {
 
     const result = await updateContact(contactId, userId, {
       ...req.body,
-      photo: photoUrl,
+      photoUrl: photoUrl,
     });
-
-    console.log(result);
 
     if (!result) {
       next(createHttpError(404, 'Contact not found'));
