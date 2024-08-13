@@ -1,0 +1,73 @@
+tags:
+  - Contacts
+summary: Update contact by id
+operationId: updateContact
+description: 'Update a contact with provided data'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '66864b57224ffbd80f2c5d04'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "Contact's name"
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: "Contact's phone number"
+            type: string
+            example: '+380000000001'
+          contactType:
+            description: "Contact's type"
+            type: string
+            enum: ['work', 'home', 'personal']
+          photo:
+            description: "Contact's photo"
+            type: string
+            format: binary
+responses:
+  '200':
+    description: 'Successfully updated contact'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully updated contact with id 66864b57224ffbd80f2c5d04!'
+            data:
+              type: object
+              $ref: '../../../components/schemas/contact.yaml'
+  '404':
+    description: 'Contact not found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Contact not found'
