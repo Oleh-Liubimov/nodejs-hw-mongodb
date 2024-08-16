@@ -3,11 +3,11 @@ required:
   - _id
   - name
   - phoneNumber
-  - email
-  - isFavourite
+  # - email
+  # - isFavorite
   - contactType
-  - userId
-  - photoUrl
+  # - userId
+  # - photoUrl
 properties:
   _id:
     description: "Contact's id"
@@ -25,8 +25,8 @@ properties:
     description: "Contact's email"
     type: string
     example: 'andriy7@example.com'
-  isFavourite:
-    description: 'Contact added to favourite or not'
+  isFavorite:
+    description: 'Contact added to favorite or not'
     type: boolean
     example: false
   contactType:

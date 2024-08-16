@@ -41,7 +41,6 @@
           {
             "in": "query",
             "name": "page",
-            "required": true,
             "schema": {
               "type": "integer",
               "example": 1
@@ -199,6 +198,11 @@
                     "type": "string",
                     "example": "+380000000001"
                   },
+                  "email": {
+                    "description": "Contact's email",
+                    "type": "string",
+                    "example": "mail@example.com"
+                  },
                   "contactType": {
                     "description": "Contact's type",
                     "type": "string",
@@ -208,13 +212,13 @@
                       "personal"
                     ]
                   },
-                  "parentId": {
-                    "description": "Contact's user id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
+                  "isFavorite": {
+                    "description": "Contact is favorite or not",
+                    "type": "boolean",
+                    "example": true
                   },
                   "photo": {
-                    "description": "Student''s photo",
+                    "description": "Contact's photo",
                     "type": "string",
                     "format": "binary"
                   }
@@ -225,7 +229,7 @@
         },
         "responses": {
           "201": {
-            "description": "Creates a student",
+            "description": "Creates a contact",
             "content": {
               "application/json": {
                 "schema": {
@@ -375,7 +379,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -388,6 +392,11 @@
                     "description": "Contact's phone number",
                     "type": "string",
                     "example": "+380000000001"
+                  },
+                  "email": {
+                    "description": "Contact's email",
+                    "type": "string",
+                    "example": "mail@example.com"
                   },
                   "contactType": {
                     "description": "Contact's type",
@@ -480,11 +489,7 @@
           "_id",
           "name",
           "phoneNumber",
-          "email",
-          "isFavourite",
-          "contactType",
-          "userId",
-          "photoUrl"
+          "contactType"
         ],
         "properties": {
           "_id": {
@@ -507,8 +512,8 @@
             "type": "string",
             "example": "andriy7@example.com"
           },
-          "isFavourite": {
-            "description": "Contact added to favourite or not",
+          "isFavorite": {
+            "description": "Contact added to favorite or not",
             "type": "boolean",
             "example": false
           },

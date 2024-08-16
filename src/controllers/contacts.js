@@ -110,10 +110,11 @@ export const patchContactController = async (req, res, next) => {
     let photoUrl = null;
 
     if (photo) {
-      env('ENABLE_CLOUDINARY') === 'true';
-      photoUrl = await saveFileToCloud(photo);
-    } else {
-      photoUrl = await saveFileToUploadDir(photo);
+      if (env('ENABLE_CLOUDINARY') === 'true') {
+        photoUrl = await saveFileToCloud(photo);
+      } else {
+        photoUrl = await saveFileToUploadDir(photo);
+      }
     }
 
     const result = await updateContact(contactId, userId, {

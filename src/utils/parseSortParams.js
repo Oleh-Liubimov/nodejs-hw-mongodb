@@ -8,7 +8,7 @@ export const parseSortOrder = (sortOrder) => {
 };
 
 const parseSortBy = (sortBy) => {
-  const keysOfContacts = ['name', 'createdAt', 'updatetAt', '_id'];
+  const keysOfContacts = ['name', 'createdAt', 'updatedAt', '_id'];
 
   if (keysOfContacts.includes(sortBy)) {
     return sortBy;

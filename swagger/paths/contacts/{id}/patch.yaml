@@ -14,7 +14,7 @@ parameters:
       example: '66864b57224ffbd80f2c5d04'
 requestBody:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         type: object
         properties:
@@ -26,6 +26,10 @@ requestBody:
             description: "Contact's phone number"
             type: string
             example: '+380000000001'
+          email:
+            description: "Contact's email"
+            type: string
+            example: 'mail@example.com'
           contactType:
             description: "Contact's type"
             type: string
